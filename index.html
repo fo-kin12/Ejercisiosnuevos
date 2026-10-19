@@ -4,6 +4,278 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rueda Libre - Alquiler de Bicicletas</title>
+    <style>
+        /* --- VARIABLES DE COLOR Y FUENTES --- */
+        :root {
+            --primary: #2d6a4f;       /* Verde bosque (Sostenibilidad) */
+            --primary-light: #40916c; /* Verde claro para interacciones */
+            --secondary: #1d3557;     /* Azul marino oscuro (Confianza) */
+            --accent: #e9c46a;        /* Amarillo/Oro para detalles */
+            --text-dark: #2b2d42;     /* Gris casi negro para lectura cómoda */
+            --text-light: #f8f9fa;    /* Blanco fondo/texto claro */
+            --bg-light: #f4f6f8;      /* Fondo gris muy suave */
+            --card-bg: #ffffff;       /* Fondo de tarjetas */
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+            --radius: 8px;
+        }
+
+        /* --- ESTILOS GENERALES --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+        }
+
+        h1, h2, h3 {
+            color: var(--secondary);
+            font-weight: 700;
+        }
+
+        a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--primary-light);
+            text-decoration: underline;
+        }
+
+        /* --- CABECERA (HERO) --- */
+        header {
+            position: relative;
+            height: 60vh;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background-color: var(--secondary);
+        }
+
+        header h1 {
+            position: relative;
+            z-index: 2;
+            color: var(--text-light);
+            font-size: 4rem;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        header img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(65%);
+            z-index: 1;
+        }
+
+        /* --- CONTENEDOR PRINCIPAL --- */
+        main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        section {
+            background: var(--card-bg);
+            padding: 40px;
+            margin-bottom: 30px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        section h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        section h2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 60px;
+            height: 4px;
+            background-color: var(--primary);
+            border-radius: 2px;
+        }
+
+        /* --- SECCIÓN QUIÉNES SOMOS --- */
+        #quienes-somos p {
+            font-size: 1.15rem;
+            margin-bottom: 15px;
+            color: #4a4e69;
+        }
+
+        /* --- SERVICIOS (GRID DINÁMICO) --- */
+        #servicios {
+            background: transparent;
+            padding: 0;
+            box-shadow: none;
+        }
+
+        #servicios h2 {
+            background: var(--card-bg);
+            padding: 40px 40px 10px 40px;
+            margin-bottom: 0;
+            border-radius: var(--radius) var(--radius) 0 0;
+        }
+
+        .servicios-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            background: var(--card-bg);
+            padding: 0 40px 40px 40px;
+            border-radius: 0 0 var(--radius) var(--radius);
+        }
+
+        .servicio-card {
+            background: var(--bg-light);
+            border-radius: var(--radius);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .servicio-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .servicio-info {
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .servicio-info h3 {
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+            color: var(--primary);
+        }
+
+        .servicio-info p {
+            font-size: 0.95rem;
+            color: #555;
+        }
+
+        /* --- LISTAS (BENEFICIOS Y CÓMO ALQUILAR) --- */
+        ul, ol {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 12px;
+            font-size: 1.05rem;
+        }
+
+        #beneficios ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        #beneficios li {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        #beneficios li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        #como-alquilar ol {
+            list-style: none;
+            counter-reset: steps;
+            padding-left: 0;
+        }
+
+        #como-alquilar li {
+            counter-increment: steps;
+            position: relative;
+            padding-left: 45px;
+            margin-bottom: 20px;
+        }
+
+        #como-alquilar li::before {
+            content: counter(steps);
+            position: absolute;
+            left: 0;
+            top: 2px;
+            background: var(--secondary);
+            color: var(--text-light);
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        /* --- CONTACTO / BOTONES --- */
+        #encuentranos p {
+            margin-bottom: 15px;
+        }
+
+        .btn-maps {
+            display: inline-block;
+            background-color: var(--primary);
+            color: var(--text-light) !important;
+            padding: 12px 24px;
+            border-radius: var(--radius);
+            font-weight: bold;
+            text-decoration: none !important;
+            box-shadow: 0 4px 10px rgba(45, 106, 79, 0.3);
+            margin-top: 10px;
+        }
+
+        .btn-maps:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(45, 106, 79, 0.4);
+        }
+
+        /* --- RESPONSIVO --- */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.5rem;
+            }
+            section {
+                padding: 25px;
+            }
+            .servicios-container {
+                padding: 0 25px 25px 25px;
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -19,46 +291,25 @@
             <p>Consulta nuestros precios competitivos en la página de <a href="paginas/tarifas.html">Tarifas y Recorridos</a>.</p>
         </section>
 
+        <!-- Contenedor general de servicios con diseño tipo tarjeta -->
         <section id="servicios">
             <h2>Nuestros servicios</h2>
+            
+            <div class="servicios-container">
+                <div class="servicio-card">
+                    <img src="img/bicicleta.jpg" alt="Bicicleta urbana de paseo color azul marino con cesta de mimbre">
+                    <div class="servicio-info">
+                        <h3>Alquiler de bicicletas</h3>
+                        <p>Contamos con una amplia flota de bicicletas urbanas y de montaña perfectas para cualquier recorrido. Cada alquiler <strong>incluye casco y candado de alta seguridad</strong> para tu total tranquilidad, asegurando que tu experiencia sea <em>completamente segura y libre de preocupaciones</em> de principio a fin.</p>
+                    </div>
+                </div>
 
-            <h3>Alquiler de bicicletas</h3>
-            <p>Contamos con una amplia flota de bicicletas urbanas y de montaña perfectas para cualquier recorrido. Cada alquiler <strong>incluye casco y candado de alta seguridad</strong> para tu total tranquilidad, asegurando que tu experiencia sea <em>completamente segura y libre de preocupaciones</em> de principio a fin.</p>
-            <img src="img/bicicleta.jpg" alt="Bicicleta urbana de paseo color azul marino con cesta de mimbre" width="600">
+                <div class="servicio-card">
+                    <img src="img/ruta.jpg" alt="Grupo de ciclistas avanzando en fila por un sendero arbolado">
+                    <div class="servicio-info">
+                        <h3>Recorridos guiados</h3>
+                        <p>Descubre los secretos mejor guardados de la ciudad de la mano de nuestros guías locales expertos. Organizamos rutas temáticas todos los fines de semana, diseñadas <strong>especialmente para grupos reducidos</strong>. Esto nos permite garantizar un trato <em>cercano, personalizado y muy dinámico</em>. Conoce los detalles de las rutas en nuestra sección de <a href="paginas/tarifas.html#tabla-recorridos">precios de recorridos guiados</a>.</p>
+                    </div>
+                </div>
 
-            <h3>Recorridos guiados</h3>
-            <p>Descubre los secretos mejor guardados de la ciudad de la mano de nuestros guías locales expertos. Organizamos rutas temáticas todos los fines de semana, diseñadas <strong>especialmente para grupos reducidos</strong>. Esto nos permite garantizar un trato <em>cercano, personalizado y muy dinámico</em>. Conoce los detalles de las rutas en nuestra sección de <a href="paginas/tarifas.html#tabla-recorridos">precios de recorridos guiados</a>.</p>
-            <img src="img/ruta.jpg" alt="Grupo de ciclistas avanzando en fila por un sendero arbolado" width="600">
 
-            <h3>Taller básico</h3>
-            <p>¿Tu bicicleta necesita un ajuste rápido? Nuestro equipo técnico se encarga de revisiones mecánicas, frenos, pinchazos y mantenimiento preventivo general. Te garantizamos un servicio <strong>rápido y eficiente en menos de 24 horas</strong>, porque sabemos que <em>tu tiempo es lo más valioso</em>.</p>
-        </section>
-
-        <section id="beneficios">
-            <h2>Beneficios de alquilar con nosotros</h2>
-            <ul>
-                <li>Precios competitivos y tarifas flexibles por horas o días completos.</li>
-                <li>Mantenimiento mecánico riguroso garantizado antes de cada entrega.</li>
-                <li>Soporte técnico y asistencia en ruta ante cualquier imprevisto.</li>
-            </ul>
-        </section>
-
-        <section id="como-alquilar">
-            <h2>¿Cómo alquilar?</h2>
-            <ol>
-                <li>Elige tu bicicleta ideal desde nuestro catálogo digital.</li>
-                <li>Presenta tu identificación oficial y un método de pago válido.</li>
-                <li>Firma el contrato digital de responsabilidad y cuidado del equipo.</li>
-                <li>Recibe tu equipo ajustado a tu medida listo para rodar.</li>
-            </ol>
-        </section>
-
-        <section id="encuentranos">
-            <h2>Encuéntranos</h2>
-            <p>Estamos ubicados en el corazón de la ciudad, listos para atenderte. Puedes ver nuestra localización exacta en el mapa a través de este <a href="https://google.com" target="_blank">enlace a Google Maps</a>.</p>
-            <p>Si tienes dudas sobre las tarifas corporativas o reservas grupales, escríbenos directamente a nuestro correo: <a href="mailto:hola@ruedalibre.example">hola@ruedalibre.example</a>.</p>
-        </section>
-    </main>
-
-</body>
-</html>
