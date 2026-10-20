@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tarifas y Recorridos - Rueda Libre</title>
+    <title>Reservas - Rueda Libre</title>
     <style>
-        /* --- VARIABLES DE COLOR Y FUENTES (Misma identidad que index) --- */
+        /* --- VARIABLES DE COLOR Y FUENTES (Misma identidad visual) --- */
         :root {
-            --primary: #2d6a4f;       /* Verde bosque */
-            --primary-light: #40916c; /* Verde claro */
-            --secondary: #1d3557;     /* Azul marino oscuro */
-            --text-dark: #2b2d42;     /* Gris oscuro */
-            --text-light: #f8f9fa;    /* Blanco fondo/texto claro */
-            --bg-light: #f4f6f8;      /* Fondo gris muy suave */
-            --card-bg: #ffffff;       /* Fondo de tarjetas */
+            --primary: #2d6a4f;       
+            --primary-light: #40916c; 
+            --secondary: #1d3557;     
+            --text-dark: #2b2d42;     
+            --text-light: #f8f9fa;    
+            --bg-light: #f4f6f8;      
+            --card-bg: #ffffff;       
             --shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
             --radius: 8px;
         }
@@ -61,6 +61,7 @@
             border: 2px solid transparent;
             border-radius: var(--radius);
             transition: all 0.3s ease;
+            margin-left: 10px;
         }
 
         nav a:hover {
@@ -82,7 +83,7 @@
             color: var(--secondary);
         }
 
-        section {
+        section, aside {
             background: var(--card-bg);
             padding: 40px;
             margin-bottom: 30px;
@@ -90,14 +91,14 @@
             box-shadow: var(--shadow);
         }
 
-        section h2 {
+        section h2, aside h2 {
             font-size: 1.8rem;
             margin-bottom: 25px;
             position: relative;
             padding-bottom: 10px;
         }
 
-        section h2::after {
+        section h2::after, aside h2::after {
             content: '';
             position: absolute;
             left: 0;
@@ -108,88 +109,75 @@
             border-radius: 2px;
         }
 
-        /* --- ESTILOS DE TABLAS (RESPONSIVAS) --- */
-        .table-container {
-            width: 100%;
-            overflow-x: auto; /* Permite scroll horizontal si la pantalla es muy pequeña */
-            margin-bottom: 10px;
+        /* --- FORMULARIOS --- */
+        .form-group {
+            margin-bottom: 20px;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-            text-align: left;
-            font-size: 1.05rem;
-        }
-
-        caption {
-            font-size: 0.9rem;
-            color: #666;
-            font-style: italic;
-            text-align: left;
-            margin-bottom: 15px;
-        }
-
-        th, td {
-            padding: 15px 20px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        thead th {
-            background-color: #f8f9fa;
-            color: var(--secondary);
-            font-weight: 700;
-        }
-
-        tbody th {
-            color: var(--primary);
+        label {
+            display: block;
             font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-dark);
         }
 
-        /* Filas alternas con color suave */
-        tbody tr:nth-child(even) {
-            background-color: #fdfdfd;
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: var(--radius);
+            font-family: inherit;
+            font-size: 1rem;
         }
 
-        /* Efecto al pasar el cursor */
-        tbody tr:hover {
-            background-color: #f4f9f4;
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.15);
         }
 
-        /* --- INFORMACIÓN ADICIONAL Y LISTAS --- */
-        #informacion-adicional p {
-            font-size: 1.1rem;
-            margin-bottom: 15px;
+        button {
+            background-color: var(--primary);
+            color: var(--text-light);
+            border: none;
+            padding: 14px 28px;
+            font-size: 1.05rem;
+            font-weight: bold;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
         }
 
-        #informacion-adicional h3 {
-            margin-top: 25px;
-            margin-bottom: 15px;
-            font-size: 1.3rem;
-            color: var(--primary);
+        button:hover {
+            background-color: var(--primary-light);
         }
 
-        #informacion-adicional ul {
+        /* --- HORARIOS Y CONTACTO --- */
+        .horarios-lista {
             list-style: none;
             padding-left: 0;
         }
 
-        #informacion-adicional li {
-            position: relative;
-            padding-left: 30px;
-            margin-bottom: 12px;
+        .horarios-lista li {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
             font-size: 1.05rem;
         }
 
-        #informacion-adicional li::before {
-            content: "•";
-            position: absolute;
-            left: 5px;
-            color: var(--primary);
-            font-size: 1.8rem;
-            line-height: 1;
-            top: -2px;
+        .horarios-lista li:last-child {
+            border-bottom: none;
+        }
+
+        /* --- PIE DE PÁGINA --- */
+        footer {
+            background-color: var(--secondary);
+            color: var(--text-light);
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            font-size: 0.95rem;
         }
 
         /* --- RESPONSIVO --- */
@@ -197,12 +185,8 @@
             h1 {
                 font-size: 2rem;
             }
-            section {
+            section, aside {
                 padding: 25px;
-            }
-            th, td {
-                padding: 12px 15px;
-                font-size: 0.95rem;
             }
         }
     </style>
@@ -210,108 +194,57 @@
 <body>
 
     <header>
-        <!-- Asumiendo que el logo mantiene una proporción adecuada horizontal -->
         <img src="../img/portada.jpg" alt="Logo de Rueda Libre">
         <nav>
-            <a href="../index.html">Volver al Inicio</a>
+            <a href="../index.html">Inicio</a>
+            <a href="tarifas.html">Tarifas</a>
         </nav>
     </header>
 
     <main>
-        <h1>Tarifas y Recorridos Guiados</h1>
+        <h1>Reserva tu Bicicleta</h1>
 
-        <section id="tabla-alquiler">
-            <h2>Tarifas de Alquiler de Bicicletas</h2>
-            <div class="table-container">
-                <table>
-                    <caption>Precios de alquiler por horas y días según el tipo de bicicleta</caption>
-                    <thead>
-                        <tr>
-                            <th scope="col">Tipo de bicicleta</th>
-                            <th scope="col">1 hora</th>
-                            <th scope="col">Medio día (4 h)</th>
-                            <th scope="col">Día completo</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">Urbana</th>
-                            <td>$10.000</td>
-                            <td>$30.000</td>
-                            <td>$50.000</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Montaña</th>
-                            <td>$15.000</td>
-                            <td>$45.000</td>
-                            <td>$70.000</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Eléctrica</th>
-                            <td>$25.000</td>
-                            <td>$70.000</td>
-                            <td>$110.000</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+        <section id="formulario-reserva">
+            <h2>Completa tus datos de solicitud</h2>
+            <form action="#" method="POST">
+                <div class="form-group">
+                    <label for="nombre">Nombre Completo:</label>
+                    <input type="text" id="nombre" name="nombre" required placeholder="Ej. Juan Pérez">
+                </div>
+                
+                <div class="form-group">
+                    <label for="bicicleta">Tipo de Bicicleta:</label>
+                    <select id="bicicleta" name="bicicleta" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="urbana">Urbana</option>
+                        <option value="montana">Montaña</option>
+                        <option value="electrica">Eléctrica</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="fecha">Fecha del Alquiler:</label>
+                    <input type="date" id="fecha" name="fecha" required>
+                </div>
+
+                <button type="submit">Enviar Solicitud de Reserva</button>
+            </form>
         </section>
 
-        <section id="tabla-recorridos">
-            <h2>Nuestros Recorridos Guiados</h2>
-            <div class="table-container">
-                <table>
-                    <caption>Detalles, niveles y costos de las rutas guiadas por la ciudad</caption>
-                    <thead>
-                        <tr>
-                            <th scope="col">Recorrido</th>
-                            <th scope="col">Distancia</th>
-                            <th scope="col">Duración</th>
-                            <th scope="col">Nivel</th>
-                            <th scope="col">Precio por persona</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">Río y Parques</th>
-                            <td>12 km</td>
-                            <td>2 h</td>
-                            <td>Fácil</td>
-                            <td>$45.000</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Sabores de Barrio</th>
-                            <td>18 km</td>
-                            <td>3 h</td>
-                            <td>Medio</td>
-                            <td>$60.000</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Reto Las Palmas</th>
-                            <td>25 km</td>
-                            <td>4 h</td>
-                            <td>Difícil</td>
-                            <td>$85.000</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-        <section id="informacion-adicional">
-            <h2>Información Importante</h2>
-            <p>Todas las tarifas de alquiler expuestas anteriormente incluyen casco y candado de alta seguridad sin costo adicional.</p>
-            <p>Los recorridos guiados salen exclusivamente los días sábados y domingos a las 7:00 a. m. desde nuestro punto principal.</p>
-            
-            <h3>¿Qué llevar al recorrido?</h3>
-            <ul>
-                <li>Ropa cómoda y calzado deportivo adecuado.</li>
-                <li>Agua o bebida hidratante personal.</li>
-                <li>Protector solar de alta protección.</li>
-                <li>Documento de identidad original vigente.</li>
+        <aside id="horario-atencion">
+            <h2>Horario de Atención</h2>
+            <p>Puedes recoger y entregar tus bicicletas dentro de las siguientes jornadas:</p>
+            <ul class="horarios-lista">
+                <li><span>Lunes a Viernes:</span> <strong>6:00 AM - 8:00 PM</strong></li>
+                <li><span>Sábados:</span> <strong>7:00 AM - 6:00 PM</strong></li>
+                <li><span>Domingos y Festivos:</span> <strong>8:00 AM - 4:00 PM</strong></li>
             </ul>
-        </section>
+        </aside>
     </main>
+
+    <footer>
+        <p>&copy; 2026 Rueda Libre - Alquiler de Bicicletas. Todos los derechos reservados.</p>
+    </footer>
 
 </body>
 </html>

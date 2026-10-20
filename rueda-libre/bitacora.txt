@@ -1,0 +1,42 @@
+# exportar_bitacora.py
+
+contenido_markdown = """# Bitácora de Estructura Semántica (v0.2)
+**Proyecto:** Rueda Libre - Alquiler de Bicicletas  
+**Objetivo:** Reestructuración con etiquetas semánticas para SEO y lectores de pantalla.
+
+---
+
+## 1. Página: Tarifas y Recorridos
+
+###  Esquema de Regiones Planificado
+* **`<header>`**: Contiene la identidad visual corporativa (imagen/logo) y el elemento de navegación.
+* **`<nav>`**: Envuelve de manera explícita el enlace de regreso al inicio como barra de navegación secundaria.
+* **`<main>`**: Contenedor global único que inicia con el título principal `<h1>` y estructura todo el núcleo.
+* **`<section>`**: Cada tabla se ha aislado rigurosamente en su propia etiqueta `<section>` autónoma con su encabezado `<h2>`.
+* **`<aside>`**: La lista de recomendaciones sobre qué llevar se ha convertido en un `<aside>`, ya que es información de valor adjunta que asiste y complementa las tarifas primarias.
+* **`<footer>`**: Añadido formalmente para garantizar consistencia institucional.
+
+###  Justificación de Contenedores Genéricos (`<div>`, `<span>`)
+* **`<div class="table-container">`**: Actúa como un *wrapper* técnico. Su única responsabilidad es gestionar el desbordamiento mediante CSS (`overflow-x: auto`) para pantallas móviles.
+
+---
+
+## 2. Página: Reservas
+
+###  Esquema de Regiones Planificado
+* **`<header>`**: Contiene el logotipo y el acceso al menú de navegación.
+* **`<nav>`**: Mantiene la consistencia de navegación entre las distintas páginas del sitio.
+* **`<main>`**: Contenedor único donde se procesa la acción principal del usuario (formulario de reserva).
+* **`<section>`**: El formulario de reservas se agrupa dentro de su propia sección delimitada con un encabezado `<h2>`.
+* **`<aside>`**: El horario de atención y canales alternos de contacto se marcan como `<aside>`, ya que asisten tangencialmente al proceso de reserva.
+* **`<footer>`**: Mantiene el cierre unificado e institucional de la marca.
+
+###  Justificación de Contenedores Genéricos (`<div>`, `<span>`)
+* **`<div class="form-group">`**: Utilizado única y exclusivamente para separar las líneas del formulario y aplicar márgenes verticales en el diseño CSS.
+"""
+
+# Escritura automática del archivo
+with open("BITACORA_V02.md", "w", encoding="utf-8") as archivo:
+    archivo.write(contenido_markdown)
+
+print("¡Archivo 'BITACORA_V02.md' generado con éxito para tu commit!")

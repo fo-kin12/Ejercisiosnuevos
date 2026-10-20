@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rueda Libre - Alquiler de Bicicletas</title>
+    <style>
+        /* --- VARIABLES DE COLOR Y FUENTES --- */
+        :root {
+            --primary: #2d6a4f;       /* Verde bosque (Sostenibilidad) */
+            --primary-light: #40916c; /* Verde claro para interacciones */
+            --secondary: #1d3557;     /* Azul marino oscuro (Confianza) */
+            --accent: #e9c46a;        /* Amarillo/Oro para detalles */
+            --text-dark: #2b2d42;     /* Gris casi negro para lectura cómoda */
+            --text-light: #f8f9fa;    /* Blanco fondo/texto claro */
+            --bg-light: #f4f6f8;      /* Fondo gris muy suave */
+            --card-bg: #ffffff;       /* Fondo de tarjetas */
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+            --radius: 8px;
+        }
+
+        /* --- ESTILOS GENERALES --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+        }
+
+        h1, h2, h3 {
+            color: var(--secondary);
+            font-weight: 700;
+        }
+
+        a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--primary-light);
+            text-decoration: underline;
+        }
+
+        /* --- CABECERA (HERO & NAV) --- */
+        header {
+            background-color: var(--secondary);
+            padding: 20px 0;
+        }
+
+        .header-hero {
+            position: relative;
+            height: 50vh;
+            min-height: 350px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        header h1 {
+            position: relative;
+            z-index: 2;
+            color: var(--text-light);
+            font-size: 4rem;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        header img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(65%);
+            z-index: 1;
+        }
+
+        /* Menú de navegación principal */
+        nav {
+            max-width: 1100px;
+            margin: 0 auto 15px auto;
+            padding: 0 20px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+            padding-left: 0;
+        }
+
+        nav a {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        /* --- CONTENEDOR PRINCIPAL --- */
+        main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        section {
+            background: var(--card-bg);
+            padding: 40px;
+            margin-bottom: 30px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        section h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        section h2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 60px;
+            height: 4px;
+            background-color: var(--primary);
+            border-radius: 2px;
+        }
+
+        /* --- SECCIÓN QUIÉNES SOMOS --- */
+        #quienes-somos p {
+            font-size: 1.15rem;
+            margin-bottom: 15px;
+            color: #4a4e69;
+        }
+
+        /* --- SERVICIOS (GRID DINÁMICO) --- */
+        #servicios {
+            background: transparent;
+            padding: 0;
+            box-shadow: none;
+        }
+
+        #servicios h2 {
+            background: var(--card-bg);
+            padding: 40px 40px 10px 40px;
+            margin-bottom: 0;
+            border-radius: var(--radius) var(--radius) 0 0;
+        }
+
+        .servicios-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            background: var(--card-bg);
+            padding: 0 40px 40px 40px;
+            border-radius: 0 0 var(--radius) var(--radius);
+        }
+
+        .servicio-card {
+            background: var(--bg-light);
+            border-radius: var(--radius);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .servicio-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .servicio-info {
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .servicio-info h3 {
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+            color: var(--primary);
+        }
+
+        .servicio-info p {
+            font-size: 0.95rem;
+            color: #555;
+        }
+
+        /* --- LISTAS (BENEFICIOS Y CÓMO ALQUILAR) --- */
+        ul, ol {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 12px;
+            font-size: 1.05rem;
+        }
+
+        #beneficios ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        #beneficios li {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        #beneficios li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        #como-alquilar ol {
+            list-style: none;
+            counter-reset: steps;
+            padding-left: 0;
+        }
+
+        #como-alquilar li {
+            counter-increment: steps;
+            position: relative;
+            padding-left: 45px;
+            margin-bottom: 20px;
+        }
+
+        #como-alquilar li::before {
+            content: counter(steps);
+            position: absolute;
+            left: 0;
+            top: 2px;
+            background: var(--secondary);
+            color: var(--text-light);
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        /* --- CONTACTO / BOTONES --- */
+        #encuentranos p {
+            margin-bottom: 15px;
+        }
+
+        .btn-maps {
+            display: inline-block;
+            background-color: var(--primary);
+            color: var(--text-light) !important;
+            padding: 12px 24px;
+            border-radius: var(--radius);
+            font-weight: bold;
+            text-decoration: none !important;
+            box-shadow: 0 4px 10px rgba(45, 106, 79, 0.3);
+            margin-top: 10px;
+        }
+
+        .btn-maps:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(45, 106, 79, 0.4);
+        }
+
+        /* --- PIE DE PÁGINA --- */
+        footer {
+            background-color: var(--secondary);
+            color: var(--text-light);
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            font-size: 0.95rem;
+        }
+
+        /* --- RESPONSIVO --- */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.5rem;
+            }
+            section {
+                padding: 25px;
+            }
+            .servicios-container {
+                padding: 0 25px 25px 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="tarifas.html">Tarifas</a></li>
+                <li><a href="reservas.html">Reservas</a></li>
+            </ul>
+        </nav>
+        <div class="header-hero">
+            <h1>Rueda Libre</h1>
+            <img src="img/portada.jpg" alt="Ciclistas recorriendo las ciclorrutas de la ciudad al amanecer" width="1200">
+        </div>
+    </header>
+
+    <main>
+        <section id="quienes-somos">
+            <h2>¿Quiénes somos?</h2>
+            <p>En <strong>Rueda Libre</strong> ofrecemos las mejores soluciones de movilidad sostenible para que disfrutes y explores la ciudad a tu propio ritmo. Queremos que cada pedalada sea una experiencia inolvidable. Si quieres visitarnos hoy mismo para conocer nuestra flota en persona, puedes consultar directamente la sección de <a href="#encuentranos">Encuéntranos</a>.</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Rueda Libre - Alquiler de Bicicletas. Todos los derechos reservados.</p>
+    </footer>
+
+</body>
+</html>
