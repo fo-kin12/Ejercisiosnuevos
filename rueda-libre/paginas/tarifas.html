@@ -3,19 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reservas - Rueda Libre</title>
+    <title>Tarifas - Rueda Libre</title>
     <style>
-        /* --- VARIABLES DE COLOR Y FUENTES (Misma identidad visual) --- */
+        /* --- VARIABLES DE COLOR Y FUENTES --- */
         :root {
             --primary: #2d6a4f;       
             --primary-light: #40916c; 
             --secondary: #1d3557;     
+            --accent: #e9c46a;        
             --text-dark: #2b2d42;     
             --text-light: #f8f9fa;    
             --bg-light: #f4f6f8;      
             --card-bg: #ffffff;       
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
-            --radius: 8px;
+            --shadow: 0 10px 20px rgba(0, 0, 0, 0.05), 0 4px 6px rgba(0, 0, 0, 0.05);
+            --radius: 12px;
+            --whatsapp: #25d366;      /* Color oficial de WhatsApp */
         }
 
         /* --- ESTILOS GENERALES --- */
@@ -40,134 +42,208 @@
         /* --- CABECERA Y NAVEGACIÓN --- */
         header {
             background-color: var(--secondary);
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: var(--shadow);
+            padding: 20px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
-        header img {
-            height: 50px;
-            width: auto;
-            object-fit: contain;
+        nav {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 10px 20px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+            padding-left: 0;
         }
 
         nav a {
             color: var(--text-light);
             text-decoration: none;
             font-weight: 600;
-            padding: 8px 16px;
-            border: 2px solid transparent;
-            border-radius: var(--radius);
-            transition: all 0.3s ease;
-            margin-left: 10px;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
         }
 
-        nav a:hover {
-            border-color: var(--text-light);
-            background-color: rgba(255, 255, 255, 0.1);
+        nav a:hover, nav a.active {
+            color: var(--accent);
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 4px;
+            text-decoration: none;
         }
 
         /* --- CONTENEDOR PRINCIPAL --- */
         main {
             max-width: 1100px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 60px 20px;
+        }
+
+        .intro-text {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #555;
+            max-width: 600px;
+            margin: 0 auto 50px auto;
         }
 
         h1 {
-            font-size: 2.5rem;
-            margin-bottom: 30px;
+            font-size: 3rem;
+            margin-bottom: 15px;
             text-align: center;
             color: var(--secondary);
-        }
-
-        section, aside {
-            background: var(--card-bg);
-            padding: 40px;
-            margin-bottom: 30px;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-        }
-
-        section h2, aside h2 {
-            font-size: 1.8rem;
-            margin-bottom: 25px;
             position: relative;
-            padding-bottom: 10px;
         }
 
-        section h2::after, aside h2::after {
-            content: '';
+        /* --- GRID DE TARIFAS (CARDS) --- */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            align-items: stretch;
+        }
+
+        .pricing-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(0,0,0,0.03);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .pricing-card.featured {
+            border: 2px solid var(--primary);
+        }
+
+        .badge {
             position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 60px;
-            height: 4px;
-            background-color: var(--primary);
-            border-radius: 2px;
-        }
-
-        /* --- FORMULARIOS --- */
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: var(--text-dark);
-        }
-
-        input, select, textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: var(--radius);
-            font-family: inherit;
-            font-size: 1rem;
-        }
-
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.15);
-        }
-
-        button {
-            background-color: var(--primary);
-            color: var(--text-light);
-            border: none;
-            padding: 14px 28px;
-            font-size: 1.05rem;
+            top: 15px;
+            right: -30px;
+            background: var(--primary);
+            color: white;
+            padding: 4px 35px;
+            font-size: 0.8rem;
             font-weight: bold;
+            transform: rotate(45deg);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .pricing-card h3 {
+            font-size: 1.6rem;
+            color: var(--secondary);
+            margin-bottom: 15px;
+        }
+
+        .price-box {
+            margin-bottom: 25px;
+            padding: 15px 0;
+            background: var(--bg-light);
             border-radius: var(--radius);
-            cursor: pointer;
+        }
+
+        .price-box .main-price {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--primary);
+            display: block;
+        }
+
+        .price-box .sub-price {
+            font-size: 1rem;
+            color: #666;
+        }
+
+        .features-list {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 35px;
+            text-align: left;
+            flex-grow: 1;
+        }
+
+        .features-list li {
+            margin-bottom: 12px;
+            font-size: 1rem;
+            color: #4a4e69;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .features-list li::before {
+            content: "✓";
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .btn-select {
+            display: block;
+            background-color: var(--secondary);
+            color: var(--text-light);
+            padding: 14px;
+            border-radius: var(--radius);
+            font-weight: bold;
+            text-decoration: none;
             transition: background-color 0.3s ease;
         }
 
-        button:hover {
+        .pricing-card.featured .btn-select {
+            background-color: var(--primary);
+        }
+
+        .btn-select:hover {
+            background-color: #132237;
+        }
+
+        .pricing-card.featured .btn-select:hover {
             background-color: var(--primary-light);
         }
 
-        /* --- HORARIOS Y CONTACTO --- */
-        .horarios-lista {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        .horarios-lista li {
+        /* --- BOTÓN FLOTANTE DE WHATSAPP --- */
+        .btn-whatsapp {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--whatsapp);
+            color: white !important;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
             display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid #e0e0e0;
-            font-size: 1.05rem;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .horarios-lista li:last-child {
-            border-bottom: none;
+        .btn-whatsapp:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+        }
+
+        .btn-whatsapp svg {
+            width: 32px;
+            height: 32px;
+            fill: white;
         }
 
         /* --- PIE DE PÁGINA --- */
@@ -175,76 +251,78 @@
             background-color: var(--secondary);
             color: var(--text-light);
             text-align: center;
-            padding: 20px;
-            margin-top: 40px;
+            padding: 25px;
+            margin-top: 60px;
             font-size: 0.95rem;
         }
 
-        /* --- RESPONSIVO --- */
         @media (max-width: 768px) {
-            h1 {
-                font-size: 2rem;
-            }
-            section, aside {
-                padding: 25px;
-            }
+            h1 { font-size: 2.2rem; }
+            nav ul { justify-content: center; gap: 15px; }
+            nav a { font-size: 1rem; }
+            .pricing-grid { grid-template-columns: 1fr; padding: 0 10px; }
+            main { padding: 40px 10px; }
+            .btn-whatsapp { bottom: 20px; right: 20px; width: 50px; height: 50px; }
+            .btn-whatsapp svg { width: 26px; height: 26px; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <img src="../img/portada.jpg" alt="Logo de Rueda Libre">
         <nav>
-            <a href="../index.html">Inicio</a>
-            <a href="tarifas.html">Tarifas</a>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="ireservas.html">Reservas</a></li>
+                <li><a href="tarifas.html" class="active">Tarifas</a></li>
+            </ul>
         </nav>
     </header>
 
     <main>
-        <h1>Reserva tu Bicicleta</h1>
+        <h1>Nuestros Planes y Tarifas</h1>
+        <p class="intro-text">Elige la opción perfecta para tu ritmo. Todos nuestros alquileres incluyen kit de seguridad sin costo adicional.</p>
 
-        <section id="formulario-reserva">
-            <h2>Completa tus datos de solicitud</h2>
-            <form action="#" method="POST">
-                <div class="form-group">
-                    <label for="nombre">Nombre Completo:</label>
-                    <input type="text" id="nombre" name="nombre" required placeholder="Ej. Juan Pérez">
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <h3>Paseo Urbana</h3>
+                <div class="price-box">
+                    <span class="main-price">$25.000 <small>COP</small></span>
+                    <span class="sub-price">o $5.000 COP por hora</span>
                 </div>
-                
-                <div class="form-group">
-                    <label for="bicicleta">Tipo de Bicicleta:</label>
-                    <select id="bicicleta" name="bicicleta" required>
-                        <option value="">Selecciona una opción</option>
-                        <option value="urbana">Urbana</option>
-                        <option value="montana">Montaña</option>
-                        <option value="electrica">Eléctrica</option>
-                    </select>
+                <ul class="features-list">
+                    <li>Bicicleta clásica de paseo</li>
+                    <li>Canasta delantera espaciosa</li>
+                    <li>Casco cómodo y ajustable</li>
+                    <li>Candado de alta seguridad</li>
+                    <li>Ideal para ciclovías planas</li>
+                </ul>
+                <a href="ireservas.html" class="btn-select">Reservar Urbana</a>
+            </div>
+
+            <div class="pricing-card featured">
+                <div class="badge">Popular</div>
+                <h3>Aventura MTB</h3>
+                <div class="price-box">
+                    <span class="main-price">$40.000 <small>COP</small></span>
+                    <span class="sub-price">o $8.000 COP por hora</span>
                 </div>
+                <ul class="features-list">
+                    <li>Bicicleta de montaña reforzada</li>
+                    <li>Suspensión delantera activa</li>
+                    <li>Sistema de cambios Shimano</li>
+                    <li>Casco, candado y kit de despinche</li>
+                    <li>Ideal para rutas exigentes y tierra</li>
+                </ul>
+                <a href="ireservas.html" class="btn-select">Reservar MTB</a>
+            </div>
 
-                <div class="form-group">
-                    <label for="fecha">Fecha del Alquiler:</label>
-                    <input type="date" id="fecha" name="fecha" required>
+            <div class="pricing-card">
+                <h3>Eco Eléctrica</h3>
+                <div class="price-box">
+                    <span class="main-price">$60.000 <small>COP</small></span>
+                    <span class="sub-price">o $12.000 COP por hora</span>
                 </div>
-
-                <button type="submit">Enviar Solicitud de Reserva</button>
-            </form>
-        </section>
-
-        <aside id="horario-atencion">
-            <h2>Horario de Atención</h2>
-            <p>Puedes recoger y entregar tus bicicletas dentro de las siguientes jornadas:</p>
-            <ul class="horarios-lista">
-                <li><span>Lunes a Viernes:</span> <strong>6:00 AM - 8:00 PM</strong></li>
-                <li><span>Sábados:</span> <strong>7:00 AM - 6:00 PM</strong></li>
-                <li><span>Domingos y Festivos:</span> <strong>8:00 AM - 4:00 PM</strong></li>
-            </ul>
-        </aside>
-    </main>
-
-    <footer>
-        <p>&copy; 2026 Rueda Libre - Alquiler de Bicicletas. Todos los derechos reservados.</p>
-    </footer>
-
-</body>
-</html>
+                <ul class="features-list">
+                    <li>Asistencia de pedaleo eléctrico</li>
+                    <li>Autonomía de hasta 40 km</li>

@@ -4,43 +4,272 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reservas - Rueda Libre</title>
+    <style>
+        /* --- VARIABLES DE COLOR Y FUENTES --- */
+        :root {
+            --primary: #2d6a4f;       
+            --primary-light: #40916c; 
+            --secondary: #1d3557;     
+            --accent: #e9c46a;        
+            --text-dark: #2b2d42;     
+            --text-light: #f8f9fa;    
+            --bg-light: #f4f6f8;      
+            --card-bg: #ffffff;       
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+            --radius: 8px;
+            --whatsapp: #25d366;      
+        }
+
+        /* --- ESTILOS GENERALES --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+        }
+
+        h1, h2, h3 {
+            color: var(--secondary);
+            font-weight: 700;
+        }
+
+        /* --- CABECERA Y NAVEGACIÓN --- */
+        header {
+            background-color: var(--secondary);
+            padding: 20px 0;
+            box-shadow: var(--shadow);
+        }
+
+        nav {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 10px 20px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+            padding-left: 0;
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--accent);
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 4px;
+            text-decoration: none;
+        }
+
+        /* --- CONTENEDOR PRINCIPAL --- */
+        main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            text-align: center;
+            color: var(--secondary);
+        }
+
+        section, aside {
+            background: var(--card-bg);
+            padding: 40px;
+            margin-bottom: 30px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        section h2, aside h2 {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        section h2::after, aside h2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 60px;
+            height: 4px;
+            background-color: var(--primary);
+            border-radius: 2px;
+        }
+
+        /* --- FORMULARIOS --- */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-dark);
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: var(--radius);
+            font-family: inherit;
+            font-size: 1rem;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.15);
+        }
+
+        button {
+            background-color: var(--primary);
+            color: var(--text-light);
+            border: none;
+            padding: 14px 28px;
+            font-size: 1.05rem;
+            font-weight: bold;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: var(--primary-light);
+        }
+
+        /* --- HORARIOS Y CONTACTO --- */
+        .horarios-lista {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .horarios-lista li {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 1.05rem;
+        }
+
+        .horarios-lista li:last-child {
+            border-bottom: none;
+        }
+
+        /* --- BOTÓN FLOTANTE DE WHATSAPP --- */
+        .btn-whatsapp {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25d366;
+            color: #ffffff;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .btn-whatsapp:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+        }
+
+        .btn-whatsapp svg {
+            width: 32px;
+            height: 32px;
+            fill: #ffffff;
+        }
+
+        /* --- PIE DE PÁGINA --- */
+        footer {
+            background-color: var(--secondary);
+            color: var(--text-light);
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            font-size: 0.95rem;
+        }
+
+        /* --- RESPONSIVO --- */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            nav ul {
+                justify-content: center;
+                gap: 15px;
+            }
+            nav a {
+                font-size: 1rem;
+            }
+            section, aside {
+                padding: 25px;
+            }
+            .btn-whatsapp {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+            }
+            .btn-whatsapp svg {
+                width: 26px;
+                height: 26px;
+            }
+        }
+    </style>
 </head>
 <body>
 
     <header>
-        <h1>Rueda Libre</h1>
         <nav>
             <ul>
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="tarifas.html">Tarifas</a></li>
-                <li><a href="reservas.html">Reservas</a></li>
+                <li><a href="./index.html">Inicio</a></li>
+                <li><a href="./ireservas.html" class="active">Reservas</a></li>
+                <li><a href="./tarifas.html">Tarifas</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
+        <h1>Reserva tu Bicicleta</h1>
+
         <section id="formulario-reserva">
-            <h2>Reserva tu bicicleta</h2>
-            
-            <form action="#">
+            <h2>Completa tus datos de solicitud</h2>
+            <form action="#" method="POST">
                 <div class="form-group">
-                    <label for="nombre">Nombre completo</label>
+                    <label for="nombre">Nombre Completo:</label>
                     <input type="text" id="nombre" name="nombre" required placeholder="Ej. Juan Pérez">
                 </div>
-
+                
                 <div class="form-group">
-                    <label for="correo">Correo electrónico</label>
-                    <input type="email" id="correo" name="correo" required placeholder="correo@ejemplo.com">
-                </div>
-
-                <div class="form-group">
-                    <label for="fecha">Fecha de la reserva</label>
-                    <input type="date" id="fecha" name="fecha" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="tipo">Tipo de bicicleta</label>
-                    <select id="tipo" name="tipo" required>
+                    <label for="bicicleta">Tipo de Bicicleta:</label>
+                    <select id="bicicleta" name="bicicleta" required>
                         <option value="">Selecciona una opción</option>
                         <option value="urbana">Urbana</option>
                         <option value="montana">Montaña</option>
@@ -48,10 +277,32 @@
                     </select>
                 </div>
 
-                <button type="submit">Reservar</button>
+                <div class="form-group">
+                    <label for="fecha">Fecha del Alquiler:</label>
+                    <input type="date" id="fecha" name="fecha" required>
+                </div>
+
+                <button type="submit">Enviar Solicitud de Reserva</button>
             </form>
         </section>
+
+        <aside id="horario-atencion">
+            <h2>Horario de Atención</h2>
+            <p>Puedes recoger y entregar tus bicicletas dentro de las siguientes jornadas:</p>
+            <ul class="horarios-lista">
+                <li><span>Lunes a Viernes:</span> <strong>6:00 AM - 8:00 PM</strong></li>
+                <li><span>Sábados:</span> <strong>7:00 AM - 6:00 PM</strong></li>
+                <li><span>Domingos y Festivos:</span> <strong>8:00 AM - 4:00 PM</strong></li>
+            </ul>
+        </aside>
     </main>
+
+    <!-- ENLACE DIRECTO A WHATSAPP WEB / MÓVIL TOTALMENTE LIMPIO -->
+    <a href="https://wa.me" class="btn-whatsapp" target="_blank" rel="noopener noreferrer" title="WhatsApp">
+        <svg viewBox="0 0 24 24" xmlns="http://w3.org">
+            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397 0 11.973 0c3.184.001 6.177 1.239 8.426 3.49 2.249 2.251 3.486 5.246 3.485 8.432-.003 6.58-5.339 11.928-11.916 11.928-1.99-.001-3.951-.5-5.688-1.448L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.863-9.742.002-2.602-1.01-5.05-2.85-6.892-1.84-1.842-4.29-2.856-6.896-2.858-5.442 0-9.866 4.372-9.87 9.746-.002 1.764.478 3.49 1.388 5.017l-.999 3.648 3.743-.981zm11.387-5.464c-.301-.15-1.781-.879-2.056-.979-.275-.1-.475-.15-.675.15-.2.3-.775.979-.95 1.179-.175.2-.35.225-.651.075-1.041-.521-1.743-1.018-2.434-2.2-1.242-2.131.111-2.062.793-3.414.125-.25.063-.475-.031-.675-.094-.2-.775-1.869-1.062-2.563-.281-.675-.563-.581-.775-.594l-.662-.012c-.225 0-.588.084-.894.425-.306.341-1.169 1.144-1.169 2.792 0 1.648 1.206 3.238 1.369 3.462.162.225 2.375 3.625 5.756 5.075.804.344 1.431.55 1.925.706.806.256 1.544.221 2.125.138.644-.094 1.781-.729 2.031-1.433.25-.704.25-1.304.175-1.433-.075-.13-.275-.205-.575-.355z"/>
+        </svg>
+    </a>
 
     <footer>
         <p>&copy; 2026 Rueda Libre - Alquiler de Bicicletas. Todos los derechos reservados.</p>
@@ -59,4 +310,6 @@
 
 </body>
 </html>
+
+
 

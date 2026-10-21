@@ -1,0 +1,39 @@
+/* 1. Variables de la marca */
+:root {
+  --color-primario: #5d44ff;
+  --color-texto: #181e4b;
+  --radio: 16px;
+}
+
+/* 2. Modelo de caja predecible */
+* { box-sizing: border-box; }
+
+body {
+  font-family: "Ubuntu", system-ui, sans-serif;
+  color: var(--color-texto);
+  background: #f4f5fb;
+  padding: 2rem;
+}
+
+/* 3. La tarjeta */
+.card {
+  max-width: 340px;
+  background: #fff;
+  padding: 1.5rem;
+  border: 1px solid #e3e6f0;
+  border-radius: var(--radio);
+  box-shadow: 0 8px 24px rgba(24, 30, 75, .08);
+}
+.precio { font-size: 1.4rem; font-weight: 700; color: var(--color-primario); }
+
+/* 4. El botón y su estado :hover */
+.btn {
+  display: inline-block;
+  padding: .7rem 1.2rem;
+  border-radius: 999px;
+  background: var(--color-primario);
+  color: #fff;
+  text-decoration: none;
+  transition: transform .15s;
+}
+.btn:hover { transform: translateY(-2px); filter: brightness(1.15); }
